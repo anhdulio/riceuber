@@ -1,0 +1,1 @@
+export const BASE_IP = 'http://45.77.35.233'
