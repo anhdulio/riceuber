@@ -17,13 +17,12 @@ module Api::V1
     # POST /products
     def create
       @product = Product.new(product_params)
-
       if @product.save
         render json: @product, status: :created, location: @product
       else
         render json: @product.errors, status: :unprocessable_entity
       end
-      end
+    end
 
     # PATCH/PUT /products/1
     def update
@@ -47,7 +46,10 @@ module Api::V1
 
       # Only allow a trusted parameter "white list" through.
       def product_params
-        params.require(:product).permit(:name, :description, :available_on, :slug, :meta_description, :meta_keywords, :payload)
+        allowed_attrs = %i[name description available_on slug
+                           meta_description meta_keywords price categories]
+                           .concat(Product.content_attributes.keys)
+        params.require(:product).permit(*allowed_attrs)
       end
 
   end
