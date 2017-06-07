@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170606034736) do
+ActiveRecord::Schema.define(version: 20170607023111) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,9 +22,10 @@ ActiveRecord::Schema.define(version: 20170606034736) do
     t.string   "slug"
     t.string   "meta_description"
     t.string   "meta_keywords"
-    t.string   "payload"
+    t.json     "payload"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.string   "categories"
   end
 
 end

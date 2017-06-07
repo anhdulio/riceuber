@@ -7,7 +7,7 @@ class CreateProducts < ActiveRecord::Migration[5.0]
       t.string :slug
       t.string :meta_description
       t.string :meta_keywords
-      t.string :payload
+      t.json :payload
 
       t.timestamps
     end
