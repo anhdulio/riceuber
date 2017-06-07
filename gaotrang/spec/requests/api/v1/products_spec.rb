@@ -39,7 +39,7 @@ describe 'POST product#create' do
       post v1_products_url, params: {product: attributes_for(:product)}
       expect(response).to have_http_status(:created)
       expect(response.content_type).to eq('application/json')
-      expect(response.location).to eq(product_url(Product.last))
+      expect(response.location).to eq(v1_product_url(Product.last))
     end
   end
   context 'with invalid params' do
