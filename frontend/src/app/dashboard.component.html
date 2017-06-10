@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="col s12 m12 l12">
+    <div class="card z-depth-0" *ngFor="let rice of rices">
+      <div class="card-image">
+        <img [src]="rice.img">
+        <span class="card-title">{{rice.name | uppercase}}</span>
+        <!--<a class="btn-floating halfway-fab waves-effect waves-light yellow" onclick="Materialize.toast('Đã cho vào giỏ', 4000)"><i class="material-icons">add</i></a>-->
+        <a class="btn-floating halfway-fab waves-effect waves-light btn-large" (click)="addToCart(rice)"><i class="material-icons">add</i></a>
+      </div>
+      <div class="card-content">
+        <p>{{rice.description}}</p>
+        <p>{{rice.review}}</p>
+      </div>
+      <div class="card-action">
+        <a [routerLink]="['/detail', rice.id]">Chi tiết</a>
+      </div>
+      <div class="divider"></div>
+    </div>
+  </div>
+</div>

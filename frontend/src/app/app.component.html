@@ -1,9 +1,19 @@
-<h1>
-  {{title}}
-</h1>
- 
- Below is something we have from backend 
- 
-<ul>
-  <li *ngFor="let book of books">{{ book.name }}</li>
-</ul>
+<!--<md-toolbar color="primary">
+    <md-input-container class="search-full-width" md-no-float>
+      <span md-prefix>
+          <i class="material-icons app-input-icon">search</i>
+          &nbsp;
+      </span>
+      <input mdInput color="primary">
+    </md-input-container>
+</md-toolbar>-->
+
+<!--<nav>
+  <a routerLink="/dashboard" routerLinkActive="Active">Home</a>
+  <a routerLink="/rices" routerLinkActive="Active">Rices</a>
+</nav>-->
+<rice-search></rice-search>
+<div class="app-container">
+  <router-outlet></router-outlet>
+</div>
+<app-footer></app-footer>

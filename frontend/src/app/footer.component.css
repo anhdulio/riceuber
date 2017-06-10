@@ -1,0 +1,9 @@
+.sticky-footer {
+    position: fixed;
+    z-index: 997;
+    bottom: 0;
+}
+
+ul.tabs {
+    height: 56px;
+}
