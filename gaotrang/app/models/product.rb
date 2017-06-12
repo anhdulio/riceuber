@@ -14,9 +14,9 @@ class Product < ApplicationRecord
       keyword_args.each_with_index do |hash, index|
         value = hash.last
         if index == 0
-          @where_clause = "#{hash.first} LIKE '%#{value}%'"
+          @where_clause = "#{hash.first} ILIKE '%#{value}%'"
         else
-          @where_clause += "OR #{hash.first} LIKE '%#{value}%'"
+          @where_clause += "OR #{hash.first} ILIKE '%#{value}%'"
         end
       end
       products = Product.where(@where_clause)
