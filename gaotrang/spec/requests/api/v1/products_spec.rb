@@ -1,16 +1,48 @@
 require 'rails_helper'
 
 describe 'GET products#index' do
-  it 'returns a success response' do
-    get v1_products_url
-    # test for the 200 status-code
-    expect(response).to be_success
+  let!(:products) { FactoryGirl.create_list(:product, 10) }
+
+  context 'when no search' do
+    it 'returns a success response' do
+      get v1_products_url
+      # test for the 200 status-code
+      expect(response).to be_success
+    end
+    it 'sends a list of products' do
+      get v1_products_url
+      expect(json.length).to eq(10)
+    end
   end
-  it 'sends a list of products' do
-    FactoryGirl.create_list(:product, 10)
-    get v1_products_url
-    expect(json.length).to eq(10)
+
+  context 'when search with valid parameters : name, categories' do
+    it 'sends a list of products - 1 param' do
+      name = products.first.name
+      get v1_products_url, params: { name: name }
+      expect(json.size).to eq(Product.search(name: name).size)
+    end
+
+    it 'sends a list of products - many params' do
+      name = products.first.name
+      categories = products.first.categories
+      get v1_products_url, params: { name: name, categories: categories }
+      expect(json.size).to eq(Product.search(name: name, categories: categories).size)
+    end
+
+    it 'sends list with no product' do
+      name = 'Lio!2'
+      get v1_products_url, params: { name: name }
+      expect(json.length).to eq(0)
+    end
   end
+
+  context 'when search with invalid parameters' do
+    it 'sends list with no product' do
+      get v1_products_url, params: { randomparam: 'abc' }
+      expect(json.length).to eq(10)
+    end
+  end
+
 end
 
 describe 'GET product#show' do

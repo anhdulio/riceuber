@@ -7,5 +7,20 @@ class Product < ApplicationRecord
   validates_numericality_of :price,
                             greater_than_or_equal_to: 0,
                             on: :create, message: "can't be negative number"
-
+  def self.search(keyword_args)
+    unless keyword_args.empty?
+      @where_clause = ''
+      @values = []
+      keyword_args.each_with_index do |hash, index|
+        value = hash.last
+        if index == 0
+          @where_clause = "#{hash.first} LIKE '%#{value}%'"
+        else
+          @where_clause += "OR #{hash.first} LIKE '%#{value}%'"
+        end
+      end
+      products = Product.where(@where_clause)
+    end
+  end
 end
+

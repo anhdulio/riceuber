@@ -4,8 +4,11 @@ module Api::V1
 
     # GET /products
     def index
-      @products = Product.all
-
+      if search_params.empty?
+        @products = Product.all
+      else
+        @products = Product.search(search_params.to_unsafe_h)
+      end
       render json: @products
     end
 
@@ -52,5 +55,10 @@ module Api::V1
         params.require(:product).permit(*allowed_attrs)
       end
 
+      # Only allow a trusted parameter "white list" through.
+      def search_params
+        allowed_attrs = %i[name categories]
+        params.permit(*allowed_attrs)
+      end
   end
 end

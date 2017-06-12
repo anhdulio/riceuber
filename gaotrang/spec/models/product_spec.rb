@@ -5,7 +5,6 @@ RSpec.describe Product, type: :model do
     product = create(:product)
     expect(product).to be_valid
   end
-
   context 'Invalid fields' do
     it 'mandatory fields' do
       product = Product.new
@@ -37,4 +36,5 @@ RSpec.describe Product, type: :model do
     end
   end
 
+  it "search function - santinize ', %"
 end
