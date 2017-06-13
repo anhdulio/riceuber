@@ -21,7 +21,7 @@ module Api::V1
     def create
       @product = Product.new(product_params)
       if @product.save
-        render json: @product, status: :created, location: v1_product_url(@product.id)
+        render json: @product, status: :created, location: v1_product_url(@product.slug)
       else
         render json: @product.errors, status: :unprocessable_entity
       end

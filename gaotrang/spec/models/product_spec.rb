@@ -38,4 +38,12 @@ RSpec.describe Product, type: :model do
   end
 
   it "search function - santinize ', %"
+
+  it 'generate unique slug' do
+    product1 = create(:product, name: "anh du", categories: "loc van")
+    product2 = create(:product, name: "anh du", categories: "loc van")
+    expect(product2.slug).to eq("anh-du-loc-van")
+    expect(product1.slug).not_to eq(product2.slug)
+  end
+
 end

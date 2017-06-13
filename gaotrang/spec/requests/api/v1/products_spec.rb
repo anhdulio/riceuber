@@ -53,7 +53,7 @@ describe 'GET product#show' do
   end
   it 'returns id, name, description, available_on, slug,
   categories, meta_description, meta_keywords, price, img_url_sml,
-  img_url_med, img_url_lrg' do
+  img_url_med, img_url_lrg, slug' do
     keys = %w[id name description available_on slug categories meta_description
               meta_keywords price img_url_sml img_url_med img_url_lrg]
     product = create(:product)

@@ -1,5 +1,7 @@
 class Product < ApplicationRecord
   include Dynamic
+  extend FriendlyId
+
   content_attr :img_url_sml
   content_attr :img_url_med
   content_attr :img_url_lrg
@@ -11,6 +13,7 @@ class Product < ApplicationRecord
   validates_numericality_of :price,
                             greater_than_or_equal_to: 0,
                             on: :create, message: "can't be negative number"
+  friendly_id :slug_candidates, use: :slugged
 
   def self.search(keyword_args)
     unless keyword_args.empty?
@@ -27,5 +30,13 @@ class Product < ApplicationRecord
       products = Product.where(@where_clause)
     end
   end
+
+  def slug_candidates
+    [
+      :name,
+      %i[name categories]
+    ]
+  end
+
 end
 
