@@ -28,6 +28,7 @@ RSpec.describe Product, type: :model do
       expect(producta.save).to eq(false)
       expect(productb.save).to eq(false)
     end
+    it 'valid image url'
   end
   context 'Valid fields' do
     let(:product) {FactoryGirl.build(:product)}

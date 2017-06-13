@@ -52,8 +52,10 @@ describe 'GET product#show' do
     expect(response).to be_success
   end
   it 'returns id, name, description, available_on, slug,
-  categories, meta_description, meta_keywords, price' do
-    keys = %w(id name description available_on slug categories meta_description meta_keywords price)
+  categories, meta_description, meta_keywords, price, img_url_sml,
+  img_url_med, img_url_lrg' do
+    keys = %w[id name description available_on slug categories meta_description
+              meta_keywords price img_url_sml img_url_med img_url_lrg]
     product = create(:product)
     get v1_product_url(product.id)
     expect(json.keys).to eq(keys)
@@ -96,7 +98,6 @@ describe 'PUT product#update' do
 
       it "renders a JSON response with the product" do
         product = create(:product)
-
         put v1_product_url(product.id), params: {product: attributes_for(:product)}
         expect(response).to have_http_status(:ok)
         expect(response.content_type).to eq('application/json')

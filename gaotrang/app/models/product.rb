@@ -1,5 +1,9 @@
 class Product < ApplicationRecord
   include Dynamic
+  content_attr :img_url_sml
+  content_attr :img_url_med
+  content_attr :img_url_lrg
+
   validates_presence_of :name, :description, :available_on, :categories,
                         :meta_description, :meta_keywords, :price,
                         on: :create, message: "can't be blank"
@@ -7,6 +11,7 @@ class Product < ApplicationRecord
   validates_numericality_of :price,
                             greater_than_or_equal_to: 0,
                             on: :create, message: "can't be negative number"
+
   def self.search(keyword_args)
     unless keyword_args.empty?
       @where_clause = ''
