@@ -6,6 +6,9 @@ class Product < ApplicationRecord
   content_attr :img_url_med
   content_attr :img_url_lrg
 
+  has_many :cart_lines
+  has_many :carts, through: :cart_lines
+
   validates_presence_of :name, :description, :available_on, :categories,
                         :meta_description, :meta_keywords, :price,
                         on: :create, message: "can't be blank"

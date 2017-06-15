@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     scope module: 'api' do
       namespace :v1 do
         resources :products
+        resources :carts, only: %i[show create update destroy]
       end
     end
   end

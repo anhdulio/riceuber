@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe 'Routing Spec', type: :routing do
+RSpec.describe 'Product Routing Spec', type: :routing do
   describe "routing" do
   let(:url)     {'http://api.domain.com/v1'}
   let(:products) {'api/v1/products'}
