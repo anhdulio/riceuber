@@ -4,7 +4,6 @@ module Api::V1
     rescue_from ActiveRecord::RecordNotFound, :with => :update
     # GET /carts/1
     def show
-      byebug
       render json: @cart
     end
 
