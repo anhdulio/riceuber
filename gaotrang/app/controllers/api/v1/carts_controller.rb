@@ -20,12 +20,14 @@ module Api::V1
     # PATCH/PUT /carts/1
     def update
       case cart_params[:cart_action]
-      when 'add'
-        if @cart.products.find_by_id(cart_params[:cart_line][:product_id])
-          cart_line = CartLine.find(cart_params[:cart_line][:id])
+    when 'add'
+        product_id = cart_params[:cart_line][:product_id]
+        if @cart.products.find_by_id(product_id)
+          cart_line = @cart.cart_lines.find_by_product_id(product_id)
           cart_line.quantity += 1
         else
           cart_line = CartLine.new(cart_params[:cart_line])
+          cart_line.quantity = 1
         end
       when 'remove'
         cart_line = CartLine.find(cart_params[:cart_line][:id])
@@ -33,8 +35,9 @@ module Api::V1
       when 'update'
         cart_line = CartLine.find(cart_params[:cart_line][:id])
         cart_line.quantity = cart_params[:cart_line][:quantity]
+        cart_line.price = cart_params[:cart_line][:price]
       else
-        render json: {message: 'invalid action'}, status: :unprocessable_entity and return
+        render json: { message: 'invalid action' }, status: :unprocessable_entity and return
       end
 
       if cart_line.save
