@@ -20,7 +20,7 @@ module Api::V1
     # PATCH/PUT /carts/1
     def update
       case cart_params[:cart_action]
-    when 'add'
+      when 'add'
         product_id = cart_params[:cart_line][:product_id]
         if @cart.products.find_by_id(product_id)
           cart_line = @cart.cart_lines.find_by_product_id(product_id)
