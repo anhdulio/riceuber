@@ -25,5 +25,9 @@ RSpec.describe 'Cart Routing Spec', type: :routing do
       expect(:delete => "#{url}/carts/1").to route_to("#{carts}#destroy", :id => "1", subdomain: 'api')
     end
 
+    it "routes to #checkout" do
+      expect(:post => "#{url}/carts/1/checkout").to route_to("#{carts}#checkout", :id => "1", subdomain: 'api')
+    end
+
   end
 end

@@ -81,6 +81,30 @@ describe 'PUT cart#update' do
   end
 end
 
+describe 'POST cart#checkout' do
+  let!(:cart) {FactoryGirl.create(:cart_with_lines)}
+  let!(:user) {FactoryGirl.build(:user).as_json}
+  let!(:shipping_address) {FactoryGirl.build(:shipping_address).as_json}
+  let!(:billing_address) {FactoryGirl.build(:billing_address).as_json}
+  it 'convert cart to order' do
+    expect {
+      post v1_cart_checkout_url(cart.id), params: { cart_action: 'checkout', user: user,
+                                                    shipping_address: shipping_address,
+                                                    billing_address: billing_address}
+    }.to change(Order, :count).by(1)
+    expect(json['state']).to eql('open')
+  end
+
+  it 'render orders' do
+    keys = %w[id order_number total adjustment  quantity state cart addresses user]
+    post v1_cart_checkout_url(cart.id), params: { cart_action: 'checkout', user: user,
+                                                  shipping_address: shipping_address,
+                                                  billing_address: billing_address}
+    expect(json.keys).to eq(keys)
+  end
+
+end
+
 describe 'DELETE cart#destroy' do
   it 'destroys the requested cart' do
     cart = create(:cart)

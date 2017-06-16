@@ -1,6 +1,6 @@
 module Api::V1
   class CartsController < ApiController
-    before_action :set_cart, only: [:show, :update, :destroy]
+    before_action :set_cart, only: [:show, :update, :destroy, :checkout]
     rescue_from ActiveRecord::RecordNotFound, :with => :update
     # GET /carts/1
     def show
@@ -41,12 +41,33 @@ module Api::V1
       end
 
       if cart_line.save
-        @cart.update_total
         render json: @cart
       else
         render json: @cart.errors, status: :unprocessable_entity
       end
 
+    end
+
+    def checkout
+      if @cart.order
+        render json: {message: 'cart has been checked out'}, status: :unprocessable_entity
+      else
+        user = User.new(user_params)
+        billing_address = Address.new(address_params('billing'))
+        billing_address.type = 'billing'
+        shipping_address = Address.new(address_params('shipping'))
+        shipping_address.type = 'shipping'
+        @order = Order.new(adjustment: 0, state: 'open')
+        @order.addresses << billing_address
+        @order.addresses << shipping_address
+        @order.cart = @cart
+        @order.user = user
+        if @order.save
+          render json: @order
+        else
+          render json: @order.errors, status: :unprocessable_entity
+        end
+      end
     end
 
     # DELETE /carts/1
@@ -63,6 +84,21 @@ module Api::V1
       # Only allow a trusted parameter "white list" through.
       def cart_params
         params.permit(:cart_action, cart_line: %i[id product_id cart_id quantity price])
+      end
+
+      #Params for order
+      def user_params
+        params.require(:user).permit(:name, :email)
+      end
+
+      def address_params(address_type)
+        case address_type
+        when 'billing'
+          params.require(:billing_address).permit(%i[first_name last_name company_name line_1 line_2])
+        when 'shipping'
+          params.require(:shipping_address).permit(%i[first_name last_name company_name line_1 line_2 instruction])
+        else
+        end
       end
 
       # Only allow a trusted parameter "white list" through.
