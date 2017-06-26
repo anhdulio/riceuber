@@ -6,6 +6,11 @@ RSpec.describe Cart, type: :model do
     expect(cart).to be_valid
   end
 
+  it 'create cart with lines with total' do
+    cart = create(:cart_with_lines)
+    expect(cart.total).not_to eq(0)
+  end
+
   context 'Invalid fields' do
     it 'valid number fields' do
       carta = create(:cart, total: 3)

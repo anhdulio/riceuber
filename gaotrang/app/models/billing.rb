@@ -1,0 +1,3 @@
+class Billing < Address
+
+end
