@@ -10,16 +10,16 @@ export class RiceService {
         const url = `${this.ricesUrl}/${id}`;
         return this.http.get(url)
             .toPromise()
-            .then(response => response.json().data as Rice)
+            .then(response => response.json() as Rice)
             .catch(this.handleError);
     }
 
-    private ricesUrl = 'api/rices';
+    private ricesUrl = 'http://api.gaotrang.vn:3000/v1/products';
     constructor (private http: Http) {};
     getRices(): Promise<Rice[]> {
         return this.http.get(this.ricesUrl)
         .toPromise()
-        .then(response => response.json().data as Rice[])
+        .then(response => response.json() as Rice[])
         .catch(this.handleError);
     }
     private handleError(error: any): Promise<any> {

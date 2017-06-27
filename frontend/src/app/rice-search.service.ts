@@ -8,7 +8,7 @@ export class RiceSearchService {
   constructor(private http: Http) {}
   search(term: string): Observable<Rice[]> {
     return this.http
-               .get(`app/rices/?name=${term}`)
-               .map(response => response.json().data as Rice[]);
+               .get(`http://api.gaotrang.vn:3000/v1/products/?name=${term}`)
+               .map(response => response.json() as Rice[]);
   }
 }
