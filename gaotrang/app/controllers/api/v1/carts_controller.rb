@@ -47,7 +47,6 @@ module Api::V1
       else
         user = User.new(user_params)
         @order = Order.new(adjustment: 0, state: 'open')
-        byebug
         address_params[:addresses].each do |address|
           address[:type] = address[:type].classify
           @order.addresses << Address.new(address)

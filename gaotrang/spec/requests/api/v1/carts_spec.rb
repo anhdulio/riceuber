@@ -90,7 +90,7 @@ describe 'POST cart#checkout' do
                                                   addresses: [shipping_address,billing_address]
                                                 }
     expect(json.keys).to eq(keys)
-    puts json
+    puts json["addresses"]
   end
 
 end
