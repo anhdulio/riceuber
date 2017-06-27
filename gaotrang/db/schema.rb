@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170616035239) do
+ActiveRecord::Schema.define(version: 20170626142210) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,7 +26,9 @@ ActiveRecord::Schema.define(version: 20170616035239) do
     t.string   "district"
     t.json     "payload"
     t.integer  "order_id"
+    t.string   "type"
     t.index ["order_id"], name: "index_addresses_on_order_id", using: :btree
+    t.index ["type"], name: "index_addresses_on_type", using: :btree
   end
 
   create_table "cart_lines", force: :cascade do |t|

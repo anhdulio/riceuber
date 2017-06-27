@@ -6,7 +6,7 @@ FactoryGirl.define do
     quantity     { Faker::Number.number(1) }
     state        'open'
     factory :order_complete do
-      after(:create) do |order|
+      after(:build) do |order|
         create(:cart_with_lines, order: order)
         create(:billing_address, order: order)
         create(:shipping_address, order: order)
