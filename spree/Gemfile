@@ -26,6 +26,10 @@ gem 'spree', '~> 3.2.1'
 gem 'spree_auth_devise', github: 'spree/spree_auth_devise'
 gem 'spree_gateway', github: 'spree/spree_gateway'
 
+#custom extension
+
+gem 'spree_custom_api', path: '../extension/spree_custom_api'
+
 #Connect with front-end
 gem 'rack-cors'
 gem 'rack-attack'
