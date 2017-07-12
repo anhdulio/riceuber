@@ -20,20 +20,20 @@ module Spree::Capiv1
       context 'when search with valid parameters : name, categories' do
         it 'sends a list of products - 1 param' do
           name = products.first.name
-          get v1_products_url, params: { name: name }
+          get :index, format: :json, params: { name: name }
           expect(json.size).to eq(Product.search(name: name).size)
         end
 
         it 'sends a list of products - many params' do
           name = products.first.name
           categories = products.first.categories
-          get v1_products_url, params: { name: name, categories: categories }
+          get :index, format: :json, params: { name: name, categories: categories }
           expect(json.size).to eq(Product.search(name: name, categories: categories).size)
         end
 
         it 'sends list with no product' do
           name = 'Lio!2'
-          get v1_products_url, params: { name: name }
+          get :index, format: :json, params: { name: name }
           expect(json.length).to eq(0)
         end
       end
